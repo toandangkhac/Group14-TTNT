@@ -8,7 +8,6 @@ filename = 'train_history.pickle'
 
 hotelCancedData = pd.read_csv(
     "C:\\Users\\toand\\Desktop\\backup\\HKI-2022-2023\\AI\\Group14\\GitHub\\Group14-TTNT\\Hotel-Reservations.csv")
-print(hotelCancedData.shape)
 hotelCancedData = hotelCancedData.replace({'type_of_meal_plan': {
                                           'Meal Plan 1': 0, 'Meal Plan 2': 1, 'Meal Plan 3': 2, 'Not Selected': 3}})
 hotelCancedData = hotelCancedData.replace({
@@ -32,13 +31,11 @@ Y = hotelCancedData['booking_status']  #nhãn của tập dữ liệu, được 
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)  # 20% dùng để kiểm tra, 80% dùng để huấn luyện
 
-svclassifier = SVC(kernel='linear') 
-svclassifier.fit(X_train, Y_train)   #sử dụng phương thức fit để huấn luyện mô hình SVM trên training set với dữ liệu đầu vào X_train và nhãn Y_train. 
-                                     #Quá trình huấn luyện này sẽ tìm kiếm siêu mặt phẳng tốt nhất để phân loại hai lớp dữ liệu (0 và 1) của tập dữ liệu.
-pickle.dump(svclassifier, open(filename, 'wb'))
-y_pred = svclassifier.predict(X_test) #dự đoán nhãn cho tập X_test
 
-
+filename = 'train_history.pickle'
+load_model = pickle.load(open(filename, 'rb'))
+print(load_model)
+y_pred = load_model.predict(X_test)
 print(y_pred)
 print(classification_report(Y_test, y_pred))
 
